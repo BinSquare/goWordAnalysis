@@ -37,6 +37,3 @@ jobs:
         name: WordAnalysis
         # Directory containing files to upload
         path: ./
-
-    - name: Go Release Binary
-      uses: ngs/go-release.action@v1.0.2
