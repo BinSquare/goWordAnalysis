@@ -27,6 +27,9 @@ jobs:
     - name: Build
       run: go build -v .
       
+    - name: go-crossbuild
+      uses: izumin5210/action-go-crossbuild@v1.0.0
+
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
@@ -34,3 +37,6 @@ jobs:
         name: WordAnalysis
         # Directory containing files to upload
         path: ./
+
+    - name: Go Release Binary
+      uses: ngs/go-release.action@v1.0.2
