@@ -10,8 +10,10 @@ type stemArray []struct {
 	word string
 }
 
+//TODO
+
 //TODO open text file for lemmatization pairs, read & save to stemArray.
-func parseText(fileName string) stemArray {
+func parseStemPair(fileName string) stemArray {
 	testStemArray := stemArray{
 		{"one", "ones"},
 	}

@@ -33,8 +33,8 @@ func TestStemExtract(t *testing.T) {
 	}
 }
 
-func TestTextParser(t *testing.T) {
+func TestParseStemPairs(t *testing.T) {
 
-	stemPair := parseText("test.txt")
+	stemPair := parseStemPair("test.txt")
 	assert.Equal(t, stemPair, stemArray{{"test", "testing"}}, fmt.Sprintf("Extracts stem pairs from file."))
 }
