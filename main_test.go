@@ -27,9 +27,14 @@ func TestStemExtract(t *testing.T) {
 		{"copying", "copy"},
 	}
 
-	for _, c := range cases {
+	for index, c := range cases {
 		var output string = stemExtract(c.input)
-		assert.Equal(t, output, c.expectedOutput, fmt.Sprintf("The word %s returned stem of %s", c.input, output))
-
+		assert.Equal(t, output, c.expectedOutput, fmt.Sprintf("Case%d: %s returned stem of %s", index, c.input, output))
 	}
+}
+
+func TestTextParser(t *testing.T) {
+
+	stemPair := parseText("test.txt")
+	assert.Equal(t, stemPair, stemArray{{"test", "testing"}}, fmt.Sprintf("Extracts stem pairs from file."))
 }

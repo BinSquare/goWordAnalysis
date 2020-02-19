@@ -5,6 +5,20 @@ import (
 	"net/http"
 )
 
+type stemArray []struct {
+	stem string
+	word string
+}
+
+//TODO open text file for lemmatization pairs, read & save to stemArray.
+func parseText(fileName string) stemArray {
+	testStemArray := stemArray{
+		{"one", "ones"},
+	}
+	return testStemArray
+}
+
+//TODO extract word stem
 func stemExtract(word string) string {
 	return "test"
 }
