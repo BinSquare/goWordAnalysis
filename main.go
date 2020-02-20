@@ -36,7 +36,7 @@ func wordCounter(words string) wordCount {
 }
 
 //TODO open, read text file and return string of words in file
-func paraseText(fileName string) string {
+func parseText(fileName string) string {
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		fmt.Println("File reading error:", err)
@@ -44,6 +44,7 @@ func paraseText(fileName string) string {
 	return string(data)
 }
 
+//TODO take in a string and return a unique array of words.
 func uniqueSet(list string) []string {
 	return []string{"hello", "world"}
 }

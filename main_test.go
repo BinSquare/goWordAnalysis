@@ -60,7 +60,7 @@ func TestWordCount(t *testing.T) {
 }
 
 func TestParseText(t *testing.T) {
-	var output string = paraseText("assets/tests/sample_input_2.txt")
+	var output string = parseText("assets/tests/sample_input_2.txt")
 	assert.Equal(t, "hello world!", output)
 }
 
