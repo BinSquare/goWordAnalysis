@@ -63,3 +63,8 @@ func TestParseText(t *testing.T) {
 	var output string = paraseText("assets/tests/sample_input_2.txt")
 	assert.Equal(t, "hello world!", output)
 }
+
+func TestUniqueSet(t *testing.T) {
+	var output []string = uniqueSet("what")
+	assert.Equal(t, []string{"hello", "world"}, output)
+}

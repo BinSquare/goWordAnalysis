@@ -44,6 +44,10 @@ func paraseText(fileName string) string {
 	return string(data)
 }
 
+func uniqueSet(list string) []string {
+	return []string{"hello", "world"}
+}
+
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
 }
