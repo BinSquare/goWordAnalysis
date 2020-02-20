@@ -10,7 +10,10 @@ type stemArray []struct {
 	word string
 }
 
-//TODO
+type wordCount []struct {
+	word       string
+	occurances int
+}
 
 //TODO open text file for lemmatization pairs, read & save to stemArray.
 func parseStemPair(fileName string) stemArray {
@@ -25,10 +28,17 @@ func stemExtract(word string) string {
 	return "test"
 }
 
+//TODO take in a string and return array of wordCount
+func wordCounter(words string) wordCount {
+	return wordCount{{"test", 1}}
+}
+
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
+}
+
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
-	})
+	http.HandleFunc("/", rootHandler)
 
 	http.ListenAndServe(":8080", nil)
 }

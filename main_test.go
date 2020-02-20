@@ -38,3 +38,23 @@ func TestParseStemPairs(t *testing.T) {
 	stemPair := parseStemPair("test.txt")
 	assert.Equal(t, stemPair, stemArray{{"test", "testing"}}, fmt.Sprintf("Extracts stem pairs from file."))
 }
+
+func TestWordCount(t *testing.T) {
+	cases := []struct {
+		input          string
+		expectedOutput wordCount
+	}{
+		{
+			"hello world",
+			wordCount{
+				{"hello", 1},
+				{"world", 1},
+			},
+		},
+	}
+
+	for index, c := range cases {
+		var output wordCount = wordCounter("hello world")
+		assert.Equal(t, output, c.expectedOutput, fmt.Sprintf("case %d: input %s", index, c.input))
+	}
+}
