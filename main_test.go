@@ -58,3 +58,8 @@ func TestWordCount(t *testing.T) {
 		assert.Equal(t, output, c.expectedOutput, fmt.Sprintf("case %d: input %s", index, c.input))
 	}
 }
+
+func TestParseText(t *testing.T) {
+	var output string = paraseText("assets/tests/sample_input_2.txt")
+	assert.Equal(t, "hello world!", output)
+}

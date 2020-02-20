@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -32,6 +33,15 @@ func stemExtract(word string) string {
 //TODO take in a string and return array of wordCount
 func wordCounter(words string) wordCount {
 	return wordCount{{"test", 1}}
+}
+
+//TODO open, read text file and return string of words in file
+func paraseText(fileName string) string {
+	data, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		fmt.Println("File reading error:", err)
+	}
+	return string(data)
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
