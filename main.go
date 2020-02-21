@@ -43,7 +43,7 @@ func wordCounter(words string) wordCount {
 	return wordCount{{"test", 1}}
 }
 
-//TODO open, read text file and return string of words in file
+//open, read text file and return string of words in file
 func parseText(fileName string) string {
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
@@ -52,7 +52,7 @@ func parseText(fileName string) string {
 	return strings.TrimRight(string(data), "\r\n")
 }
 
-//read file and return file contents as a string
+//open, read text file and return array of words in file
 func parseWords(fileName string) []string {
 	file, err := os.Open(fileName)
 	if err != nil {
