@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -48,9 +49,10 @@ func parseText(fileName string) string {
 	if err != nil {
 		fmt.Println("File reading error:", err)
 	}
-	return string(data)
+	return strings.TrimRight(string(data), "\r\n")
 }
 
+//read file and return file contents as a string
 func parseWords(fileName string) []string {
 	file, err := os.Open(fileName)
 	if err != nil {
@@ -59,15 +61,15 @@ func parseWords(fileName string) []string {
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanWords)
-	var stopWords []string
+	var words []string
 	for scanner.Scan() {
-		stopWords = append(stopWords, scanner.Text())
+		words = append(words, scanner.Text())
 	}
-	return stopWords
+	return words
 }
 
-//TODO take in a string array and string, return bool if list contains word already.
-func duplicatedWord(wordsList []string, word string) bool {
+//take in a string array and string, return bool if list contains word already.
+func containsWord(wordsList []string, word string) bool {
 	for _, uniqueWord := range wordsList {
 		if uniqueWord == word {
 			return true
@@ -76,14 +78,12 @@ func duplicatedWord(wordsList []string, word string) bool {
 	return false
 }
 
-//TODO exclude english stop words
+//returns array with removed english stop words based on list of stopwords.
 func excludeStopWords(words []string, stopWords []string) []string {
 	var nonStopWords []string
 	for _, word := range words {
-		for _, stopWord := range stopWords {
-			if stopWord != word && !duplicatedWord(nonStopWords, word) {
-				nonStopWords = append(nonStopWords, word)
-			}
+		if !containsWord(stopWords, word) {
+			nonStopWords = append(nonStopWords, word)
 		}
 	}
 	return nonStopWords

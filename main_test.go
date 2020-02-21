@@ -64,11 +64,6 @@ func TestParseText(t *testing.T) {
 	assert.Equal(t, "hello world!", output)
 }
 
-// func TestUniqueSet(t *testing.T) {
-// 	var output []string = uniqueSet("what")
-// 	assert.Equal(t, []string{"hello", "world"}, output)
-// }
-
 func TestDuplicatedWord(t *testing.T) {
 
 	cases := []struct {
@@ -89,7 +84,7 @@ func TestDuplicatedWord(t *testing.T) {
 	}
 
 	for _, test := range cases {
-		var output bool = duplicatedWord(test.wordsList, test.word)
+		var output bool = containsWord(test.wordsList, test.word)
 		assert.Equal(t, test.expectedOutput, output)
 	}
 }
@@ -106,9 +101,9 @@ func TestExcludeStopWords(t *testing.T) {
 			[]string{"world"},
 		},
 		{
-			[]string{"hello", "world"},
+			[]string{"hello", "world", "hello", "world"},
 			[]string{"world"},
-			[]string{"hello"},
+			[]string{"hello", "hello"},
 		},
 		{
 			[]string{"then", "the", "world", "ended"},
