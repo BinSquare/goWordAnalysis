@@ -23,20 +23,7 @@
         <br>
         <div class="row">
             <div class="col s12">
-                <form enctype="multipart/form-data" action="http://localhost:8080/upload" method="post">
-                    <input type="file" name="textFile" />
-                    <br>
-                    <br>
-                    <br>
-                    <label>
-                        <input type="checkbox" />
-                        <span>remove stop words</span>
-                    </label>
-                    <br>
-                    <br>
-                    <br>
-                    <input type="submit" value="upload" />
-                </form>
+                {{.Word}} : {{.Occurances}}
             </div>
 
         </div>

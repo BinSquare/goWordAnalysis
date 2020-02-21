@@ -20,8 +20,8 @@ type stemArray struct {
 }
 
 type wordCount struct {
-	word       string
-	occurances int
+	Word       string
+	Occurances int
 }
 
 var stopWordsList string = "./assets/stop-words/stop_words.txt"
@@ -128,7 +128,7 @@ func excludeStopWords(words []string, stopWords []string) []string {
 func sortedWords(wordCountArray []wordCount) []wordCount {
 	var tempWordCountArray []wordCount = wordCountArray
 	sort.SliceStable(tempWordCountArray, func(i, j int) bool {
-		return wordCountArray[i].occurances > wordCountArray[j].occurances
+		return wordCountArray[i].Occurances > wordCountArray[j].Occurances
 	})
 
 	var tempSortedArray []wordCount
@@ -144,16 +144,54 @@ func sortedWords(wordCountArray []wordCount) []wordCount {
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	uploadPage := template.Must(template.ParseFiles("./templates/index.html"))
 	uploadPage.Execute(w, nil)
+	return
 }
 
 func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
 }
 
+func uploadFile(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("File Upload Endpoint Hit")
+
+	tmpl := template.Must(template.ParseFiles("./templates/upload.html"))
+
+	// Parse our multipart form, 10 << 20 specifies a maximum
+	// upload of 10 MB files.
+	r.ParseMultipartForm(10 << 20)
+
+	file, _, err := r.FormFile("textFile")
+	if err != nil {
+		fmt.Println("Error Retrieving the File")
+		fmt.Println(err)
+		data := wordCount{
+			Word:       "ERROR, file failed to be read!",
+			Occurances: 0,
+		}
+		tmpl.Execute(w, data)
+		return
+	}
+
+	defer file.Close()
+
+	fileBytes, err := ioutil.ReadAll(file)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	ioutil.WriteFile("./test.txt", fileBytes, 0644)
+
+	data := wordCount{
+		Word: "word", Occurances: 5,
+	}
+
+	tmpl.Execute(w, data)
+}
+
 func main() {
 	route := mux.NewRouter()
 	route.HandleFunc("/", rootHandler)
-	route.HandleFunc("/upload", uploadHandler)
+	route.HandleFunc("/upload", uploadFile)
 
 	log.Fatal(http.ListenAndServe(":8080", route))
 }
