@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -52,12 +53,18 @@ func uniqueSet(list string) []string {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
+	uploadPage := template.Must(template.ParseFiles("./templates/index.html"))
+	uploadPage.Execute(w, nil)
+}
+
+func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
 }
 
 func main() {
-	r := mux.NewRouter()
-	r.HandleFunc("/", rootHandler)
+	route := mux.NewRouter()
+	route.HandleFunc("/", rootHandler)
+	route.HandleFunc("/upload", uploadHandler)
 
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Fatal(http.ListenAndServe(":8080", route))
 }
