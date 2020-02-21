@@ -68,3 +68,8 @@ func TestUniqueSet(t *testing.T) {
 	var output []string = uniqueSet("what")
 	assert.Equal(t, []string{"hello", "world"}, output)
 }
+
+func TestExcludeStopWords(t *testing.T) {
+	var output string = excludeStopWords("test", "test")
+	assert.Equal(t, "excluded test words", output)
+}

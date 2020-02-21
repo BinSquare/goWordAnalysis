@@ -52,6 +52,11 @@ func uniqueSet(list string) []string {
 	return []string{"hello", "world"}
 }
 
+//TODO exclude english stop words
+func excludeStopWords(words string, stopWordsFile string) string {
+	return "exclude stop words"
+}
+
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	uploadPage := template.Must(template.ParseFiles("./templates/index.html"))
 	uploadPage.Execute(w, nil)
