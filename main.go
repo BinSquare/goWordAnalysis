@@ -147,10 +147,6 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func uploadHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
-}
-
 func uploadFile(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("File Upload Endpoint Hit")
 
@@ -188,10 +184,17 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, data)
 }
 
+func historyHandler(w http.ResponseWriter, r *http.Request) {
+
+	tmpl := template.Must(template.ParseFiles("./templates/history.html"))
+	tmpl.Execute(w, nil)
+}
+
 func main() {
 	route := mux.NewRouter()
 	route.HandleFunc("/", rootHandler)
 	route.HandleFunc("/upload", uploadFile)
+	route.HandleFunc("/history", historyHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", route))
 }
