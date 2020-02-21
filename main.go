@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -19,6 +21,8 @@ type wordCount []struct {
 	word       string
 	occurances int
 }
+
+var stopWordsList string = "./assets/stop-words/stop_words.txt"
 
 //TODO open text file for lemmatization pairs, read & save to stemArray.
 func parseStemPair(fileName string) stemArray {
@@ -47,14 +51,42 @@ func parseText(fileName string) string {
 	return string(data)
 }
 
-//TODO take in a string and return a unique array of words.
-func uniqueSet(list string) []string {
-	return []string{"hello", "world"}
+func parseWords(fileName string) []string {
+	file, err := os.Open(fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanWords)
+	var stopWords []string
+	for scanner.Scan() {
+		stopWords = append(stopWords, scanner.Text())
+	}
+	return stopWords
+}
+
+//TODO take in a string array and string, return bool if list contains word already.
+func duplicatedWord(wordsList []string, word string) bool {
+	for _, uniqueWord := range wordsList {
+		if uniqueWord == word {
+			return true
+		}
+	}
+	return false
 }
 
 //TODO exclude english stop words
-func excludeStopWords(words string, stopWordsFile string) string {
-	return "exclude stop words"
+func excludeStopWords(words []string, stopWords []string) []string {
+	var nonStopWords []string
+	for _, word := range words {
+		for _, stopWord := range stopWords {
+			if stopWord != word && !duplicatedWord(nonStopWords, word) {
+				nonStopWords = append(nonStopWords, word)
+			}
+		}
+	}
+	return nonStopWords
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {

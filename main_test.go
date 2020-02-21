@@ -64,12 +64,61 @@ func TestParseText(t *testing.T) {
 	assert.Equal(t, "hello world!", output)
 }
 
-func TestUniqueSet(t *testing.T) {
-	var output []string = uniqueSet("what")
-	assert.Equal(t, []string{"hello", "world"}, output)
+// func TestUniqueSet(t *testing.T) {
+// 	var output []string = uniqueSet("what")
+// 	assert.Equal(t, []string{"hello", "world"}, output)
+// }
+
+func TestDuplicatedWord(t *testing.T) {
+
+	cases := []struct {
+		wordsList      []string
+		word           string
+		expectedOutput bool
+	}{
+		{
+			[]string{"hello", "world"},
+			"world",
+			true,
+		},
+		{
+			[]string{"hello", "world"},
+			"again",
+			false,
+		},
+	}
+
+	for _, test := range cases {
+		var output bool = duplicatedWord(test.wordsList, test.word)
+		assert.Equal(t, test.expectedOutput, output)
+	}
 }
 
 func TestExcludeStopWords(t *testing.T) {
-	var output string = excludeStopWords("test", "test")
-	assert.Equal(t, "excluded test words", output)
+	cases := []struct {
+		input          []string
+		stopWordsArray []string
+		expectedOutput []string
+	}{
+		{
+			[]string{"hello", "world"},
+			[]string{"hello"},
+			[]string{"world"},
+		},
+		{
+			[]string{"hello", "world"},
+			[]string{"world"},
+			[]string{"hello"},
+		},
+		{
+			[]string{"then", "the", "world", "ended"},
+			[]string{"the", "and", "then"},
+			[]string{"world", "ended"},
+		},
+	}
+
+	for index, c := range cases {
+		var output []string = excludeStopWords(c.input, c.stopWordsArray)
+		assert.Equal(t, c.expectedOutput, output, fmt.Sprintf("case %d: exclude stop words", index))
+	}
 }
