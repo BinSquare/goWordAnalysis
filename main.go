@@ -13,7 +13,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type stemArray []struct {
+type stemArray struct {
 	stem string
 	word string
 }
@@ -25,16 +25,36 @@ type wordCount []struct {
 
 var stopWordsList string = "./assets/stop-words/stop_words.txt"
 
-//TODO open text file for lemmatization pairs, read & save to stemArray.
-func parseStemPair(fileName string) stemArray {
-	testStemArray := stemArray{
-		{"one", "ones"},
+//open text file for lemmatization pairs, read & save to stemArray.
+func parseStemPair(fileName string) []stemArray {
+	file, err := os.Open(fileName)
+
+	if err != nil {
+		log.Fatal(err.Error())
 	}
-	return testStemArray
+
+	var stemPairsArray []stemArray
+
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+
+	for scanner.Scan() {
+		wordsArray := strings.Fields(scanner.Text())
+
+		stem := wordsArray[0]
+		lemmatizedWord := wordsArray[1]
+
+		stemPairsArray = append(stemPairsArray,
+			stemArray{stem, lemmatizedWord})
+
+	}
+	fmt.Println(stemPairsArray)
+	return stemPairsArray
 }
 
 //TODO extract word stem
 func stemExtract(word string) string {
+
 	return "test"
 }
 
@@ -52,7 +72,6 @@ func parseText(fileName string) string {
 	return strings.TrimRight(string(data), "\r\n")
 }
 
-//open, read text file and return array of words in file
 func parseWords(fileName string) []string {
 	file, err := os.Open(fileName)
 	if err != nil {
