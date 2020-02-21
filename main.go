@@ -52,12 +52,10 @@ func parseStemPair(fileName string) []stemArray {
 	return stemPairsArray
 }
 
-//extract word stem
+//extract word stem, note - room for optimization.
 func stemExtract(word string, stemPairs []stemArray) string {
 	for _, pair := range stemPairs {
-		fmt.Println(pair)
 		if pair.word == word {
-			fmt.Println(word)
 			return pair.stem
 		}
 	}
