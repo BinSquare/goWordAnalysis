@@ -64,6 +64,18 @@ func TestWordCount(t *testing.T) {
 				{"world", 1},
 			},
 		},
+		{
+			[]string{
+				"hello", "world", "hello", "hello", "world",
+			},
+			[]string{
+				"hello", "world",
+			},
+			[]wordCount{
+				{"hello", 3},
+				{"world", 2},
+			},
+		},
 	}
 
 	for index, c := range cases {

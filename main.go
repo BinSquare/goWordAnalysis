@@ -124,7 +124,7 @@ func excludeStopWords(words []string, stopWords []string) []string {
 	return nonStopWords
 }
 
-//TODO returns 25 sorted most frequent words.
+//returns 25 sorted most frequent words.
 func sortedWords(wordCountArray []wordCount) []wordCount {
 	var tempWordCountArray []wordCount = wordCountArray
 	sort.SliceStable(tempWordCountArray, func(i, j int) bool {
