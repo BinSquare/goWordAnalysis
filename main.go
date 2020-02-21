@@ -24,6 +24,7 @@ type wordCount []struct {
 }
 
 var stopWordsList string = "./assets/stop-words/stop_words.txt"
+var lemmatization_pairs string = "./assets/tests/sample_lemmatization_pairs_1.txt"
 
 //open text file for lemmatization pairs, read & save to stemArray.
 func parseStemPair(fileName string) []stemArray {
@@ -48,14 +49,19 @@ func parseStemPair(fileName string) []stemArray {
 			stemArray{stem, lemmatizedWord})
 
 	}
-	fmt.Println(stemPairsArray)
 	return stemPairsArray
 }
 
-//TODO extract word stem
-func stemExtract(word string) string {
-
-	return "test"
+//extract word stem
+func stemExtract(word string, stemPairs []stemArray) string {
+	for _, pair := range stemPairs {
+		fmt.Println(pair)
+		if pair.word == word {
+			fmt.Println(word)
+			return pair.stem
+		}
+	}
+	return word
 }
 
 //TODO take in a string and return array of wordCount
