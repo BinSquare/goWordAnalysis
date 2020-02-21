@@ -24,7 +24,7 @@ type wordCount []struct {
 }
 
 var stopWordsList string = "./assets/stop-words/stop_words.txt"
-var lemmatization_pairs string = "./assets/tests/sample_lemmatization_pairs_1.txt"
+var lemmatizationPairs string = "./assets/lemmatization-lists/lemmatization-en.txt"
 
 //open text file for lemmatization pairs, read & save to stemArray.
 func parseStemPair(fileName string) []stemArray {
@@ -76,6 +76,7 @@ func parseText(fileName string) string {
 	return strings.TrimRight(string(data), "\r\n")
 }
 
+//open, read text file and return array of words in file
 func parseWords(fileName string) []string {
 	file, err := os.Open(fileName)
 	if err != nil {
