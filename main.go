@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/gorilla/mux"
@@ -121,6 +122,23 @@ func excludeStopWords(words []string, stopWords []string) []string {
 		}
 	}
 	return nonStopWords
+}
+
+//TODO returns 25 sorted most frequent words.
+func sortedWords(wordCountArray []wordCount) []wordCount {
+	var tempWordCountArray []wordCount = wordCountArray
+	sort.SliceStable(tempWordCountArray, func(i, j int) bool {
+		return wordCountArray[i].occurances > wordCountArray[j].occurances
+	})
+
+	var tempSortedArray []wordCount
+	for index, item := range tempWordCountArray {
+		if index < 25 {
+			tempSortedArray = append(tempSortedArray, item)
+		}
+	}
+	fmt.Println(tempSortedArray)
+	return tempSortedArray
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {

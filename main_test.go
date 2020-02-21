@@ -130,3 +130,72 @@ func TestExcludeStopWords(t *testing.T) {
 		assert.Equal(t, c.expectedOutput, output, fmt.Sprintf("case %d: exclude stop words", index))
 	}
 }
+
+func TestSortedWords(t *testing.T) {
+	cases := []struct {
+		input          []wordCount
+		expectedOutput []wordCount
+	}{
+		{
+			[]wordCount{
+				{"you", 49},
+				{"you", 49},
+				{"you", 49},
+				{"you", 49},
+				{"you", 49},
+				{"ends", 4},
+				{"ends", 4},
+				{"ends", 4},
+				{"ends", 4},
+				{"ends", 4},
+				{"world", 1},
+				{"world", 1},
+				{"world", 1},
+				{"world", 1},
+				{"world", 1},
+				{"what", 0},
+				{"the", 850},
+				{"the", 850},
+				{"the", 850},
+				{"the", 850},
+				{"the", 850},
+				{"with", 150},
+				{"with", 150},
+				{"with", 150},
+				{"with", 150},
+				{"with", 150},
+			},
+			[]wordCount{
+				{"the", 850},
+				{"the", 850},
+				{"the", 850},
+				{"the", 850},
+				{"the", 850},
+				{"with", 150},
+				{"with", 150},
+				{"with", 150},
+				{"with", 150},
+				{"with", 150},
+				{"you", 49},
+				{"you", 49},
+				{"you", 49},
+				{"you", 49},
+				{"you", 49},
+				{"ends", 4},
+				{"ends", 4},
+				{"ends", 4},
+				{"ends", 4},
+				{"ends", 4},
+				{"world", 1},
+				{"world", 1},
+				{"world", 1},
+				{"world", 1},
+				{"world", 1},
+			}},
+	}
+	for _, c := range cases {
+		output := sortedWords(c.input)
+		assert.Equal(t, c.expectedOutput, output)
+	}
+
+}
