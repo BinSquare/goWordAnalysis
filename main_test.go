@@ -48,12 +48,18 @@ func TestParseStemPairs(t *testing.T) {
 
 func TestWordCount(t *testing.T) {
 	cases := []struct {
-		input          string
-		expectedOutput wordCount
+		input          []string
+		uniqueList     []string
+		expectedOutput []wordCount
 	}{
 		{
-			"hello world",
-			wordCount{
+			[]string{
+				"hello", "world",
+			},
+			[]string{
+				"hello", "world",
+			},
+			[]wordCount{
 				{"hello", 1},
 				{"world", 1},
 			},
@@ -61,8 +67,8 @@ func TestWordCount(t *testing.T) {
 	}
 
 	for index, c := range cases {
-		var output wordCount = wordCounter("hello world")
-		assert.Equal(t, output, c.expectedOutput, fmt.Sprintf("case %d: input %s", index, c.input))
+		var output []wordCount = wordCounter(c.input, c.uniqueList)
+		assert.Equal(t, c.expectedOutput, output, fmt.Sprintf("case %d: input %s", index, c.input))
 	}
 }
 

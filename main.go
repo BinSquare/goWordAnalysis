@@ -18,7 +18,7 @@ type stemArray struct {
 	word string
 }
 
-type wordCount []struct {
+type wordCount struct {
 	word       string
 	occurances int
 }
@@ -62,9 +62,19 @@ func stemExtract(word string, stemPairs []stemArray) string {
 	return word
 }
 
-//TODO take in a string and return array of wordCount
-func wordCounter(words string) wordCount {
-	return wordCount{{"test", 1}}
+//take in a string array and return array of wordCount
+func wordCounter(words []string, uniqueList []string) []wordCount {
+	var tempWordCount []wordCount
+	for _, uniqueWord := range uniqueList {
+		counter := 0
+		for _, word := range words {
+			if word == uniqueWord {
+				counter = counter + 1
+			}
+		}
+		tempWordCount = append(tempWordCount, wordCount{uniqueWord, counter})
+	}
+	return tempWordCount
 }
 
 //open, read text file and return string of words in file
