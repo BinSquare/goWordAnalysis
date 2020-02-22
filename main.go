@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"time"
 
+	"goWordAnalysis/utils"
+
 	"github.com/gorilla/mux"
 )
 
@@ -62,8 +64,9 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	fileName := fmt.Sprintf("./uploads/%d.txt", time.Now().UnixNano())
 	ioutil.WriteFile(fileName, fileBytes, 0644)
 
+	fileContent := utils.ParseText(fileName)
 	data := PageData{
-		FileContent: "testing string",
+		FileContent: fileContent,
 		FileWords: []string{
 			"stuff",
 			"stuff again",
