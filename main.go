@@ -10,6 +10,7 @@ import (
 	"os"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -175,7 +176,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	ioutil.WriteFile("./test.txt", fileBytes, 0644)
+	ioutil.WriteFile(fmt.Sprintf("./uploads/%d.txt", time.Now().UnixNano()), fileBytes, 0644)
 
 	data := wordCount{
 		Word: "word", Occurances: 5,
