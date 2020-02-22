@@ -10,8 +10,8 @@ type wordCount struct {
 	Occurances int
 }
 
-//take in a string array and return array of wordCount
-func wordCounter(words []string, uniqueList []string) []wordCount {
+//WordCounter take in a string array and return array of wordCount
+func WordCounter(words []string, uniqueList []string) []wordCount {
 	var tempWordCount []wordCount
 	for _, uniqueWord := range uniqueList {
 		counter := 0
@@ -25,8 +25,8 @@ func wordCounter(words []string, uniqueList []string) []wordCount {
 	return tempWordCount
 }
 
-//take in a string array and string, return bool if list contains word already.
-func containsWord(wordsList []string, word string) bool {
+//ContainsWord take in a string array and string, return bool if list contains word already.
+func ContainsWord(wordsList []string, word string) bool {
 	for _, uniqueWord := range wordsList {
 		if uniqueWord == word {
 			return true
@@ -35,19 +35,19 @@ func containsWord(wordsList []string, word string) bool {
 	return false
 }
 
-//returns array with removed english stop words based on list of stopwords.
-func excludeStopWords(words []string, stopWords []string) []string {
+//ExcludeStopWords returns array with removed english stop words based on list of stopwords.
+func ExcludeStopWords(words []string, stopWords []string) []string {
 	var nonStopWords []string
 	for _, word := range words {
-		if !containsWord(stopWords, word) {
+		if !ContainsWord(stopWords, word) {
 			nonStopWords = append(nonStopWords, word)
 		}
 	}
 	return nonStopWords
 }
 
-//returns 25 sorted most frequent words.
-func sortedWords(wordCountArray []wordCount) []wordCount {
+//SortedWords returns 25 sorted most frequent words.
+func SortedWords(wordCountArray []wordCount) []wordCount {
 	var tempWordCountArray []wordCount = wordCountArray
 	sort.SliceStable(tempWordCountArray, func(i, j int) bool {
 		return wordCountArray[i].Occurances > wordCountArray[j].Occurances

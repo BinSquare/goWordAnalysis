@@ -9,8 +9,8 @@ import (
 	"strings"
 )
 
-//open, read text file and return string of words in file
-func parseText(fileName string) string {
+//ParseText open, read text file and return string of words in file
+func ParseText(fileName string) string {
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		fmt.Println("File reading error:", err)
@@ -18,8 +18,8 @@ func parseText(fileName string) string {
 	return strings.TrimRight(string(data), "\r\n")
 }
 
-//open, read text file and return array of words in file
-func parseWords(fileName string) []string {
+//ParseWords open, read text file and return array of words in file
+func ParseWords(fileName string) []string {
 	file, err := os.Open(fileName)
 	if err != nil {
 		log.Fatal(err)

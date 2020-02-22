@@ -40,7 +40,7 @@ func TestWordCount(t *testing.T) {
 	}
 
 	for index, c := range cases {
-		var output []wordCount = wordCounter(c.input, c.uniqueList)
+		var output []wordCount = WordCounter(c.input, c.uniqueList)
 		assert.Equal(t, c.expectedOutput, output, fmt.Sprintf("case %d: input %s", index, c.input))
 	}
 }
@@ -65,7 +65,7 @@ func TestDuplicatedWord(t *testing.T) {
 	}
 
 	for _, test := range cases {
-		var output bool = containsWord(test.wordsList, test.word)
+		var output bool = ContainsWord(test.wordsList, test.word)
 		assert.Equal(t, test.expectedOutput, output)
 	}
 }
@@ -94,7 +94,7 @@ func TestExcludeStopWords(t *testing.T) {
 	}
 
 	for index, c := range cases {
-		var output []string = excludeStopWords(c.input, c.stopWordsArray)
+		var output []string = ExcludeStopWords(c.input, c.stopWordsArray)
 		assert.Equal(t, c.expectedOutput, output, fmt.Sprintf("case %d: exclude stop words", index))
 	}
 }
@@ -162,7 +162,7 @@ func TestSortedWords(t *testing.T) {
 			}},
 	}
 	for _, c := range cases {
-		output := sortedWords(c.input)
+		output := SortedWords(c.input)
 		assert.Equal(t, c.expectedOutput, output)
 	}
 

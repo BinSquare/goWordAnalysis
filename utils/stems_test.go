@@ -27,10 +27,10 @@ func TestStemExtract(t *testing.T) {
 		{"copying", "copy"},
 	}
 
-	stemPairs := parseStemPair("../assets/lemmatization-lists/lemmatization-en.txt")
+	stemPairs := ParseStemPair("../assets/lemmatization-lists/lemmatization-en.txt")
 
 	for index, c := range cases {
-		var output string = stemExtract(c.input, stemPairs)
+		var output string = StemExtract(c.input, stemPairs)
 		assert.Equal(t, c.expectedOutput, output, fmt.Sprintf("Case%d: %s returned stem of %s", index, c.input, output))
 	}
 }

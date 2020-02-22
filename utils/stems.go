@@ -12,8 +12,8 @@ type stemArray struct {
 	word string
 }
 
-//open text file for lemmatization pairs, read & save to stemArray.
-func parseStemPair(fileName string) []stemArray {
+//ParseStemPair open text file for lemmatization pairs, read & save to stemArray.
+func ParseStemPair(fileName string) []stemArray {
 	file, err := os.Open(fileName)
 
 	if err != nil {
@@ -38,8 +38,8 @@ func parseStemPair(fileName string) []stemArray {
 	return stemPairsArray
 }
 
-//extract word stem, note - room for optimization.
-func stemExtract(word string, stemPairs []stemArray) string {
+//StemExtract extract word stem, note - room for optimization.
+func StemExtract(word string, stemPairs []stemArray) string {
 	for _, pair := range stemPairs {
 		if pair.word == word {
 			return pair.stem
