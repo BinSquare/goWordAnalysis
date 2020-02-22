@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"goWordAnalysis/utils"
+	utils "goWordAnalysis/vendor"
 
 	"github.com/gorilla/mux"
 )
