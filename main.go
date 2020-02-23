@@ -37,7 +37,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 
 	type PageData struct {
 		FileContent string
-		FileWords   []string
+		FileWords   []utils.WordCount
 		Filter      string
 	}
 
@@ -47,7 +47,6 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		data := PageData{
 			FileContent: "ERROR, file failed to be read!",
-			FileWords:   []string{"No words detected"},
 			Filter:      "",
 		}
 		tmpl.Execute(w, data)
@@ -65,13 +64,17 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	ioutil.WriteFile(fileName, fileBytes, 0644)
 
 	fileContent := utils.ParseText(fileName)
+
+	ogWords := utils.ParseWords(fileName)
+
+	wordCountList := utils.WordCounter(ogWords, ogWords)
+
+	// lemmatizationList := utils.ParseStemPair(lemmatizationPairs)
+
 	data := PageData{
 		FileContent: fileContent,
-		FileWords: []string{
-			"stuff",
-			"stuff again",
-		},
-		Filter: filter,
+		FileWords:   wordCountList,
+		Filter:      filter,
 	}
 
 	tmpl.Execute(w, data)

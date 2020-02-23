@@ -7,20 +7,21 @@ import (
 	"strings"
 )
 
-type stemArray struct {
+//StemArray returns stem and lemmatized word pair
+type StemArray struct {
 	stem string
 	word string
 }
 
 //ParseStemPair open text file for lemmatization pairs, read & save to stemArray.
-func ParseStemPair(fileName string) []stemArray {
+func ParseStemPair(fileName string) []StemArray {
 	file, err := os.Open(fileName)
 
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	var stemPairsArray []stemArray
+	var stemPairsArray []StemArray
 
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
@@ -32,14 +33,14 @@ func ParseStemPair(fileName string) []stemArray {
 		lemmatizedWord := wordsArray[1]
 
 		stemPairsArray = append(stemPairsArray,
-			stemArray{stem, lemmatizedWord})
+			StemArray{stem, lemmatizedWord})
 
 	}
 	return stemPairsArray
 }
 
 //StemExtract extract word stem, note - room for optimization.
-func StemExtract(word string, stemPairs []stemArray) string {
+func StemExtract(word string, stemPairs []StemArray) string {
 	for _, pair := range stemPairs {
 		if pair.word == word {
 			return pair.stem
