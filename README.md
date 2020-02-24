@@ -21,6 +21,8 @@ Full coverage tests:
 1. clone project 
 2. run
 > - ./goWordAnalysis
+## Usage
+1. navigate to localhost:8080 for the webapp
 ## Project structure
 
 |Folder          |Function                       |
