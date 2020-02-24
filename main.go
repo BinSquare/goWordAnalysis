@@ -70,12 +70,11 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	stemmedList := utils.Stemify(ogWords, stemPairsList)
 	uniqueList := utils.Uniqify(stemmedList)
 	wordCountList := utils.WordCounter(stemmedList, uniqueList)
-
-	// lemmatizationList := utils.ParseStemPair(lemmatizationPairs)
+	sortedList := utils.SortedWords(wordCountList)
 
 	data := PageData{
 		FileContent: fileContent,
-		FileWords:   wordCountList,
+		FileWords:   sortedList,
 		Filter:      filter,
 	}
 
