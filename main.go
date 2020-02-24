@@ -16,6 +16,26 @@ import (
 var stopWordsList string = "./assets/stop-words/stop_words.txt"
 var lemmatizationPairs string = "./assets/lemmatization-lists/lemmatization-en.txt"
 
+func wordAnalysis(fileName string, lemmaFile string, filterStopWords bool, stopWordslist string) []utils.WordCount {
+	ogWords := utils.ParseWords(fileName)
+	stopWords := utils.ParseWords(stopWordsList)
+
+	stemPairsList := utils.ParseStemPair(lemmaFile)
+
+	stemmedList := utils.Stemify(ogWords, stemPairsList)
+	uniqueList := utils.Uniqify(stemmedList)
+
+	if filterStopWords {
+		filteredList := utils.ExcludeStopWords(uniqueList, stopWords)
+		wordCountList := utils.WordCounter(stemmedList, filteredList)
+		sortedList := utils.SortedWords(wordCountList)
+		return sortedList
+	}
+	wordCountList := utils.WordCounter(stemmedList, uniqueList)
+	sortedList := utils.SortedWords(wordCountList)
+	return sortedList
+}
+
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	uploadPage := template.Must(template.ParseFiles("./templates/index.html"))
 	uploadPage.Execute(w, nil)
@@ -30,15 +50,15 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(10 << 20)
 	file, _, err := r.FormFile("textFile")
 	checkbox := r.Form["stopWordsFilter"]
-	filter := "false"
+	filter := false
 	if checkbox != nil {
-		filter = "true"
+		filter = true
 	}
 
 	type PageData struct {
 		FileContent string
 		FileWords   []utils.WordCount
-		Filter      string
+		Filter      bool
 	}
 
 	fmt.Println(checkbox)
@@ -47,7 +67,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		data := PageData{
 			FileContent: "ERROR, file failed to be read!",
-			Filter:      "",
+			Filter:      filter,
 		}
 		tmpl.Execute(w, data)
 		return
@@ -65,12 +85,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 
 	fileContent := utils.ParseText(fileName)
 
-	ogWords := utils.ParseWords(fileName)
-	stemPairsList := utils.ParseStemPair(lemmatizationPairs)
-	stemmedList := utils.Stemify(ogWords, stemPairsList)
-	uniqueList := utils.Uniqify(stemmedList)
-	wordCountList := utils.WordCounter(stemmedList, uniqueList)
-	sortedList := utils.SortedWords(wordCountList)
+	sortedList := wordAnalysis(fileName, lemmatizationPairs, filter, stopWordsList)
 
 	data := PageData{
 		FileContent: fileContent,
