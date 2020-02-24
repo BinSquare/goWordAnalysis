@@ -1,11 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	utils "goWordAnalysis/vendor"
@@ -80,13 +82,27 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
+	os.MkdirAll("./uploads/", os.ModePerm)
 	fileName := fmt.Sprintf("./uploads/%d.txt", time.Now().UnixNano())
 	ioutil.WriteFile(fileName, fileBytes, 0644)
-
 	fileContent := utils.ParseText(fileName)
-
 	sortedList := wordAnalysis(fileName, lemmatizationPairs, filter, stopWordsList)
+	_ = os.Remove(fileName)
 
+	histories := utils.ReadHistory("./history.json")
+
+	history := utils.PastAnalysis{
+		Original: fileContent,
+		Analysis: sortedList,
+	}
+
+	if len(histories) > 10 {
+		histories = histories[1:]
+	}
+
+	histories = append(histories, history)
+
+	utils.SaveHistory(histories)
 	data := PageData{
 		FileContent: fileContent,
 		FileWords:   sortedList,
@@ -98,8 +114,19 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 
 func historyHandler(w http.ResponseWriter, r *http.Request) {
 
+	histories := utils.ReadHistory("./history.json")
+	fmt.Println(histories)
+	type HistoryData struct {
+		Content []utils.PastAnalysis
+	}
+
+	data := HistoryData{
+		Content: histories,
+	}
+
+	fmt.Println(data)
 	tmpl := template.Must(template.ParseFiles("./templates/history.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, data)
 }
 
 func main() {
@@ -108,5 +135,27 @@ func main() {
 	route.HandleFunc("/upload", uploadFile)
 	route.HandleFunc("/history", historyHandler)
 
+	type Analysis struct {
+		Original string
+		Analysis []utils.WordCount
+	}
+
+	analysis := Analysis{
+		Original: "hello world",
+		Analysis: []utils.WordCount{
+			{
+				Word:       "testing1",
+				Occurances: 1,
+			},
+			{
+				Word:       "testing2",
+				Occurances: 3,
+			},
+		},
+	}
+
+	file, _ := json.MarshalIndent(analysis, "", " ")
+
+	_ = ioutil.WriteFile("test.json", file, 0644)
 	log.Fatal(http.ListenAndServe(":8080", route))
 }
