@@ -48,3 +48,12 @@ func StemExtract(word string, stemPairs []StemArray) string {
 	}
 	return word
 }
+
+//Stemify iterates words array to return a array with only word stems.
+func Stemify(wordsList []string, stemPairsList []StemArray) []string {
+	var stemmedList []string
+	for _, word := range wordsList {
+		stemmedList = append(stemmedList, StemExtract(word, stemPairsList))
+	}
+	return stemmedList
+}
