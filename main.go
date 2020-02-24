@@ -66,8 +66,10 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	fileContent := utils.ParseText(fileName)
 
 	ogWords := utils.ParseWords(fileName)
-
-	wordCountList := utils.WordCounter(ogWords, ogWords)
+	stemPairsList := utils.ParseStemPair(lemmatizationPairs)
+	stemmedList := utils.Stemify(ogWords, stemPairsList)
+	uniqueList := utils.Uniqify(stemmedList)
+	wordCountList := utils.WordCounter(stemmedList, uniqueList)
 
 	// lemmatizationList := utils.ParseStemPair(lemmatizationPairs)
 
