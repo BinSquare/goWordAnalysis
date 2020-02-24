@@ -29,7 +29,7 @@ func ParseWords(fileName string) []string {
 	scanner.Split(bufio.ScanWords)
 	var words []string
 	for scanner.Scan() {
-		words = append(words, strings.Trim(scanner.Text(), ",.?!_-"))
+		words = append(words, strings.ToLower(strings.Trim(scanner.Text(), ",.?!_-")))
 	}
 	return words
 }
