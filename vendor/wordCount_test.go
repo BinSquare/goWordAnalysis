@@ -11,7 +11,7 @@ func TestWordCount(t *testing.T) {
 	cases := []struct {
 		input          []string
 		uniqueList     []string
-		expectedOutput []wordCount
+		expectedOutput []WordCount
 	}{
 		{
 			[]string{
@@ -20,7 +20,7 @@ func TestWordCount(t *testing.T) {
 			[]string{
 				"hello", "world",
 			},
-			[]wordCount{
+			[]WordCount{
 				{"hello", 1},
 				{"world", 1},
 			},
@@ -32,7 +32,7 @@ func TestWordCount(t *testing.T) {
 			[]string{
 				"hello", "world",
 			},
-			[]wordCount{
+			[]WordCount{
 				{"hello", 3},
 				{"world", 2},
 			},
@@ -40,18 +40,18 @@ func TestWordCount(t *testing.T) {
 	}
 
 	for index, c := range cases {
-		var output []wordCount = WordCounter(c.input, c.uniqueList)
+		var output []WordCount = WordCounter(c.input, c.uniqueList)
 		assert.Equal(t, c.expectedOutput, output, fmt.Sprintf("case %d: input %s", index, c.input))
 	}
 }
 
 func TestSortedWords(t *testing.T) {
 	cases := []struct {
-		input          []wordCount
-		expectedOutput []wordCount
+		input          []WordCount
+		expectedOutput []WordCount
 	}{
 		{
-			[]wordCount{
+			[]WordCount{
 				{"you", 49},
 				{"you", 49},
 				{"you", 49},
@@ -79,7 +79,7 @@ func TestSortedWords(t *testing.T) {
 				{"with", 150},
 				{"with", 150},
 			},
-			[]wordCount{
+			[]WordCount{
 				{"the", 850},
 				{"the", 850},
 				{"the", 850},

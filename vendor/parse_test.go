@@ -16,7 +16,7 @@ func TestParseStemPairs(t *testing.T) {
 
 	stemPair := ParseStemPair("../assets/tests/sample_lemmatization_pairs_1.txt")
 
-	stemtestArray := []stemArray{
+	stemtestArray := []StemArray{
 		{"play", "playing"},
 		{"stay", "staying"},
 	}
