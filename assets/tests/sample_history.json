@@ -1,0 +1,21 @@
+
+[
+    {
+ "Original": "hello world",
+ "Analysis": [
+  {
+   "Word": "hello",
+   "Occurances": 1
+  }
+ ]
+    },
+    {
+ "Original": "hello universe",
+ "Analysis": [
+  {
+   "Word": "hello",
+   "Occurances": 1
+  }
+ ]
+    }
+]
