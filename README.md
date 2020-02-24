@@ -8,8 +8,8 @@
 ## Dev Installation
 1. clone project into go/src/ 
 2. run commands to install ext library dependencies: 
-> - go get github.com/gorrilla/mux
-> - go get github.com/stretchr/testify/assert
+> - go get -u github.com/gorrilla/mux
+> - go get -u github.com/stretchr/testify/assert
 3. run command to execute program
 > - go run main.go
 ### Testing
