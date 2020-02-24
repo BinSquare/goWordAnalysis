@@ -35,28 +35,3 @@ func TestExcludeStopWords(t *testing.T) {
 		assert.Equal(t, c.expectedOutput, output, fmt.Sprintf("case %d: exclude stop words", index))
 	}
 }
-
-func TestDuplicatedWord(t *testing.T) {
-
-	cases := []struct {
-		wordsList      []string
-		word           string
-		expectedOutput bool
-	}{
-		{
-			[]string{"hello", "world"},
-			"world",
-			true,
-		},
-		{
-			[]string{"hello", "world"},
-			"again",
-			false,
-		},
-	}
-
-	for _, test := range cases {
-		var output bool = ContainsWord(test.wordsList, test.word)
-		assert.Equal(t, test.expectedOutput, output)
-	}
-}

@@ -10,13 +10,3 @@ func ExcludeStopWords(words []string, stopWords []string) []string {
 	}
 	return nonStopWords
 }
-
-//ContainsWord take in a string array and string, return bool if list contains word already.
-func ContainsWord(wordsList []string, word string) bool {
-	for _, uniqueWord := range wordsList {
-		if uniqueWord == word {
-			return true
-		}
-	}
-	return false
-}
