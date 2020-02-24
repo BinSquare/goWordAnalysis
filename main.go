@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"io/ioutil"
@@ -85,10 +84,13 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	os.MkdirAll("./uploads/", os.ModePerm)
 	fileName := fmt.Sprintf("./uploads/%d.txt", time.Now().UnixNano())
 	ioutil.WriteFile(fileName, fileBytes, 0644)
+
 	fileContent := utils.ParseText(fileName)
+
 	sortedList := wordAnalysis(fileName, lemmatizationPairs, filter, stopWordsList)
 	_ = os.Remove(fileName)
 
+	//spaghetti code from this point forward, out of time.
 	histories := utils.ReadHistory("./history.json")
 
 	history := utils.PastAnalysis{
@@ -140,22 +142,5 @@ func main() {
 		Analysis []utils.WordCount
 	}
 
-	analysis := Analysis{
-		Original: "hello world",
-		Analysis: []utils.WordCount{
-			{
-				Word:       "testing1",
-				Occurances: 1,
-			},
-			{
-				Word:       "testing2",
-				Occurances: 3,
-			},
-		},
-	}
-
-	file, _ := json.MarshalIndent(analysis, "", " ")
-
-	_ = ioutil.WriteFile("test.json", file, 0644)
 	log.Fatal(http.ListenAndServe(":8080", route))
 }
