@@ -19,6 +19,7 @@ jobs:
 
     - name: Get dependencies
       run: |
+        env GIT_TERMINAL_PROMPT=1
         go get -u github.com/gorrilla/mux
         go get -u github.com/stretchr/testify/assert
         if [ -f Gopkg.toml ]; then
