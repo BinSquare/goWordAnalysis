@@ -9,8 +9,7 @@ import (
 	"os"
 	"time"
 
-	utils "goWordAnalysis/vendor"
-
+	utils "github.com/BinSquare/goWordAnalysis/vendor"
 	"github.com/gorilla/mux"
 )
 
