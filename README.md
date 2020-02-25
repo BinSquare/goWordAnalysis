@@ -10,6 +10,7 @@
 2. run commands to install ext library dependencies: 
 > - go get -u github.com/gorrilla/mux
 > - go get -u github.com/stretchr/testify/assert
+> - go get -u github.com/BinSquare/goWordAnalysis/vendor
 3. run command to execute program
 > - go run main.go
 ### Testing
@@ -19,8 +20,16 @@ Full coverage tests:
 > go tests ./...
 ## User installation (for linux)
 1. clone project 
+1.5. If goWordAnalysis binary does not exist, run at root project folder: 
+> - go build .
 2. run
 > - ./goWordAnalysis
+
+
+## User installation (for cross-built binaries)
+1. clone project
+2. go build .
+3. Place built binary into root directory i.e. folder containing main.go
 ## Usage
 1. navigate to localhost:8080 for the webapp
 ## Project structure
@@ -36,7 +45,7 @@ Full coverage tests:
 
 ##Program Design
 
-Quick overview: 
+###Quick overview: 
 
 Go is chosen for this project because it highlights my ability to adapt to new technologies. I did not know how to program in go before this project. Though it's benefits in speed and ease of use certainly helped.
 
