@@ -19,6 +19,7 @@ jobs:
 
     - name: Get dependencies
       run: |
+        git config --global --add url."git@github.com:".insteadOf "https://github.com/"
         env GIT_TERMINAL_PROMPT=1
         go get -u github.com/gorrilla/mux
         go get -u github.com/stretchr/testify/assert
